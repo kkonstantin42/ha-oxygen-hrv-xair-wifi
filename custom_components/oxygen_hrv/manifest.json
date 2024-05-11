@@ -10,6 +10,8 @@
   "homekit": {},
   "iot_class": "local_polling",
   "requirements": [],
+  "documentation": "https://github.com/kkonstantin42/ha-oxygen-hrv",
+  "issue_tracker": "https://github.com/kkonstantin42/ha-oxygen-hrv/issues",
   "ssdp": [],
   "zeroconf": [],
   "version": "0.0.1"
