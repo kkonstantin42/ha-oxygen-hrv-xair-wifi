@@ -82,14 +82,12 @@ class OxygenHrvClimateEntity(CoordinatorEntity, ClimateEntity):
 
     async def async_set_fan_mode(self, fan_mode: str) -> None:
         """Set new target fan mode."""
-        print("Setting fan mode to " + fan_mode)
         await self.device.set_target_flow(fan_mode.rstrip("%"))
         await self.coordinator.async_request_refresh()
 
     async def async_set_temperature(self, **kwargs: Any) -> None:
         """Set new target temperature."""
         temperature = kwargs[ATTR_TEMPERATURE]
-        print("Setting temperature to " + str(temperature))
         await self.device.set_target_temp(temperature)
         await self.coordinator.async_request_refresh()
 

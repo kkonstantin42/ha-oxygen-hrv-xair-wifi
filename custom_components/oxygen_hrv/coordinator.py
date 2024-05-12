@@ -34,7 +34,7 @@ class OxygenHrvCoordinator(DataUpdateCoordinator):
         so entities can quickly look up their data.
         """
         try:
-            _LOGGER.info("Updating oxygen state")
+            _LOGGER.debug("Updating oxygen state")
             async with timeout(10):
                 await self.device.fetch_state()
                 return self.device

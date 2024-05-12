@@ -1,4 +1,4 @@
-"""Config flow for oxygen-hrv integration."""
+"""Config flow for oxygen_hrv integration."""
 
 from __future__ import annotations
 
@@ -67,7 +67,7 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
 
 
 class ConfigFlow(ConfigFlow, domain=DOMAIN):
-    """Handle a config flow for oxygen-hrv."""
+    """Handle a config flow for oxygen_hrv."""
 
     VERSION = 1
 

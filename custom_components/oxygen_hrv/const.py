@@ -1,3 +1,3 @@
-"""Constants for the oxygen-hrv integration."""
+"""Constants for the oxygen_hrv integration."""
 
 DOMAIN = "oxygen_hrv"

@@ -1,4 +1,4 @@
-"""The oxygen-hrv integration."""
+"""The oxygen_hrv integration."""
 
 from __future__ import annotations
 
@@ -16,7 +16,7 @@ PLATFORMS: list[Platform] = [Platform.CLIMATE, Platform.FAN]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Set up oxygen-hrv from a config entry."""
+    """Set up oxygen_hrv from a config entry."""
 
     hass.data.setdefault(DOMAIN, {})
     device = OxygenHrvDevice(entry.data[CONF_HOST])
