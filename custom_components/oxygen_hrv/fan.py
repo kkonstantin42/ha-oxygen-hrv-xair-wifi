@@ -76,4 +76,4 @@ class OxygenHrvFanEntity(CoordinatorEntity, FanEntity):
 
     def set_device_values(self) -> None:
         """Set entity state from device."""
-        self._attr_percentage = int(self.device.target_flow)
+        self._attr_percentage = self.device.ga_data.flow()

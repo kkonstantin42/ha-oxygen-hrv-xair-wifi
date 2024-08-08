@@ -16,6 +16,7 @@ from .const import DOMAIN
 from .coordinator import OxygenHrvCoordinator
 from .entity import OxygenHrvEntity
 from .oxygen_client import OxygenHrvDevice
+from .oxygen_ga_parser import  GaData
 
 FAN_MODE_VALUES = list(range(45, 105, 5))
 
@@ -29,6 +30,8 @@ async def async_setup_entry(
 
 class OxygenHrvClimateEntity(CoordinatorEntity, ClimateEntity):
     """Climate entity representing Oxygen Heat Exchange."""
+
+    device: OxygenHrvDevice
 
     _attr_supported_features = (
         ClimateEntityFeature.TURN_ON
@@ -93,10 +96,10 @@ class OxygenHrvClimateEntity(CoordinatorEntity, ClimateEntity):
 
     def set_device_values(self) -> None:
         """Set entity state from device."""
-        self._attr_current_temperature = self.device.real_temp
-        self._attr_target_temperature = self.device.target_temp
+        self._attr_current_temperature = self.device.ga_data.current_indoors_temperature()
+        self._attr_target_temperature = self.device.ga_data.target_temperature()
         self._attr_fan_mode = next(
             str(fan_flow) + "%"
             for fan_flow in FAN_MODE_VALUES
-            if fan_flow >= self.device.target_flow
+            if fan_flow >= self.device.ga_data.flow()
         )
