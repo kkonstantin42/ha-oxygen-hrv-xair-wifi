@@ -1,6 +1,6 @@
 {
-  "domain": "oxygen_hrv",
-  "name": "Oxygen HRV",
+  "domain": "oxygen_hrv_xair_wifi",
+  "name": "Oxygen HRV X-Air WiFi",
   "codeowners": [
     "@kkonstantin42"
   ],
@@ -10,8 +10,8 @@
   "homekit": {},
   "iot_class": "local_polling",
   "requirements": [],
-  "documentation": "https://github.com/kkonstantin42/ha-oxygen-hrv",
-  "issue_tracker": "https://github.com/kkonstantin42/ha-oxygen-hrv/issues",
+  "documentation": "https://github.com/kkonstantin42/ha-oxygen-hrv-xair-wifi",
+  "issue_tracker": "https://github.com/kkonstantin42/ha-oxygen-hrv-xair-wifi/issues",
   "ssdp": [],
   "zeroconf": [],
   "version": "0.0.1"
