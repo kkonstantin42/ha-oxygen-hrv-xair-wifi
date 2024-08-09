@@ -5,9 +5,11 @@ from datetime import timedelta
 import logging
 
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .oxygen_client import CannotConnect, OxygenHrvDevice
+from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -25,7 +27,13 @@ class OxygenHrvCoordinator(DataUpdateCoordinator):
             # Polling interval. Will only be polled if there are subscribers.
             update_interval=timedelta(seconds=5),
         )
+
         self.device = device
+        self.device_info = DeviceInfo(
+            identifiers={(DOMAIN, self.device.mac_address)},
+            name="Oxygen HRV X-Air",
+            manufacturer="UAB Oxygen Group",
+        )
 
     async def _async_update_data(self):
         """Fetch data from API endpoint.

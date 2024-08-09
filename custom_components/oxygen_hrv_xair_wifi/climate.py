@@ -57,13 +57,9 @@ class OxygenHrvClimateEntity(CoordinatorEntity, ClimateEntity):
 
         self._attr_unique_id = format_mac(self.device.mac_address) + "-climate"
         self._attr_has_entity_name = True
-        self.entity_id = "climate.oxygen_hrv"
+        self.entity_id = "climate." + DOMAIN
         self._attr_name = "Oxygen HRV Climate"
-        self._attr_device_info = DeviceInfo(
-            connections={(self.device.mac_address, self.device.mac_address)},
-            name="Oxygen LT HRV",
-            manufacturer="UAB Oxygen",
-        )
+        self._attr_device_info = coordinator.device_info
         self.set_device_values()
 
     @callback

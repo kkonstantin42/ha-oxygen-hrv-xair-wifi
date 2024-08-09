@@ -52,7 +52,7 @@ class OxygenHrvFanEntity(CoordinatorEntity, FanEntity):
 
         self._attr_unique_id = format_mac(self.device.mac_address) + "-fan"
         self._attr_has_entity_name = True
-        self.entity_id = "fan.oxygen_hrv"
+        self.entity_id = "fan." + DOMAIN
         self._attr_name = "Oxygen HRV Fan"
         self._attr_device_info = DeviceInfo(
             connections={(self.device.mac_address, self.device.mac_address)},

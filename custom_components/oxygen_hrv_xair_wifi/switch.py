@@ -31,13 +31,9 @@ class BoostEnabledSwitch(CoordinatorEntity, SwitchEntity):
 
 		self._attr_unique_id = format_mac(self.device.mac_address) + "-boostenabled"
 		self._attr_has_entity_name = True
-		self.entity_id = "switch.oxygen_hrv_boost_enabled"
+		self.entity_id = "switch." + DOMAIN + "_boost_enabled"
 		self._attr_name = "Oxygen HRV Boost Enabled"
-		self._attr_device_info = DeviceInfo(
-			connections={(self.device.mac_address, self.device.mac_address)},
-			name="Oxygen LT HRV",
-			manufacturer="UAB Oxygen",
-		)
+		self._attr_device_info = coordinator.device_info
 		self.set_device_values()
 
 	async def async_turn_on(self) -> None:

@@ -31,13 +31,9 @@ class BoostFlowNumber(CoordinatorEntity, NumberEntity):
 
 		self._attr_unique_id = format_mac(self.device.mac_address) + "-boostflow"
 		self._attr_has_entity_name = True
-		self.entity_id = "number.oxygen_hrv_boost_flow"
+		self.entity_id = "number." + DOMAIN + "_boost_flow"
 		self._attr_name = "Oxygen HRV Boost Flow"
-		self._attr_device_info = DeviceInfo(
-			connections={(self.device.mac_address, self.device.mac_address)},
-			name="Oxygen LT HRV",
-			manufacturer="UAB Oxygen",
-		)
+		self._attr_device_info = coordinator.device_info
 		self._attr_native_min_value = 1
 		self._attr_native_max_value = 100
 		self._attr_native_unit_of_measurement = "%"
@@ -73,11 +69,7 @@ class BoostTimeNumber(CoordinatorEntity, NumberEntity):
 		self._attr_has_entity_name = True
 		self.entity_id = "number.oxygen_hrv_boost_time_minutes"
 		self._attr_name = "Oxygen HRV Boost Time in minutes"
-		self._attr_device_info = DeviceInfo(
-			connections={(self.device.mac_address, self.device.mac_address)},
-			name="Oxygen LT HRV",
-			manufacturer="UAB Oxygen",
-		)
+		self._attr_device_info = coordinator.device_info
 		self._attr_native_min_value = 1
 		self._attr_native_max_value = 30
 		self._attr_native_step = 1
