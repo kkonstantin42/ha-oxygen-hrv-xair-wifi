@@ -8,17 +8,15 @@ from homeassistant.components.climate import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import ATTR_TEMPERATURE, UnitOfTemperature
 from homeassistant.core import HomeAssistant, callback
-from homeassistant.helpers.device_registry import DeviceInfo, format_mac
+from homeassistant.helpers.device_registry import format_mac
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN
 from .coordinator import OxygenHrvCoordinator
-from .entity import OxygenHrvEntity
 from .oxygen_client import OxygenHrvDevice
-from .oxygen_ga_parser import  GaData
 
-FAN_MODE_VALUES = list(range(45, 105, 5))
+FAN_MODE_VALUES = list(range(10, 105, 5))
 
 
 async def async_setup_entry(
@@ -52,8 +50,7 @@ class OxygenHrvClimateEntity(CoordinatorEntity, ClimateEntity):
         self._attr_target_temperature_low = 19.0
         self._attr_target_temperature_high = 30.0
         self._attr_target_temperature_step = 1.0
-        self._attr_hvac_modes = [HVACMode.AUTO]
-        self._attr_hvac_mode = HVACMode.AUTO
+        self._attr_hvac_modes = [HVACMode.AUTO, HVACMode.OFF]
 
         self._attr_unique_id = format_mac(self.device.mac_address) + "-climate"
         self._attr_has_entity_name = True
@@ -71,13 +68,15 @@ class OxygenHrvClimateEntity(CoordinatorEntity, ClimateEntity):
 
     async def async_turn_on(self) -> None:
         """Turn the entity on."""
-        await self.device.turn_on()
-        await self.coordinator.async_request_refresh()
+        await self.coordinator.async_turn_on()
 
     async def async_turn_off(self) -> None:
         """Turn the entity off."""
-        await self.device.turn_off()
-        await self.coordinator.async_request_refresh()
+        await self.coordinator.async_turn_off()
+
+    async def async_set_hvac_mode(self, hvac_mode: HVACMode) -> None:
+        """Set HVAC mode (AUTO = on, OFF = off)."""
+        await self.coordinator.async_set_hvac_mode(hvac_mode)
 
     async def async_set_fan_mode(self, fan_mode: str) -> None:
         """Set new target fan mode."""
@@ -99,3 +98,7 @@ class OxygenHrvClimateEntity(CoordinatorEntity, ClimateEntity):
             for fan_flow in FAN_MODE_VALUES
             if fan_flow >= self.device.ga_data.flow()
         )
+        if self.device.ga_data.power_on():
+            self._attr_hvac_mode = HVACMode.AUTO
+        else:
+            self._attr_hvac_mode = HVACMode.OFF

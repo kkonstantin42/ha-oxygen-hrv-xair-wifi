@@ -25,12 +25,18 @@ class OxygenHrvDevice:
                 self.host + "/cmd?GA", timeout=self.timeout_s
             )
             response.raise_for_status()
-        except httpx.exceptions.RequestException as e:
+        except httpx.HTTPError as e:
             self.device_connected = False
             raise CannotConnect(
                 "Failed to connect to Oxygen HRV at " + self.host
             ) from e
-        self.ga_data = parse_ga(response.text)
+        try:
+            self.ga_data = parse_ga(response.text)
+        except Exception as e:
+            self.device_connected = False
+            raise CannotConnect(
+                "Failed to parse Oxygen HRV response from " + self.host
+            ) from e
         self.device_connected = True
 
     async def set_target_temp(self, target_temp: str | float):
